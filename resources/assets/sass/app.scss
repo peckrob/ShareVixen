@@ -1,0 +1,93 @@
+
+// Fonts
+//@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+//@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+@import url(https://fonts.googleapis.com/css?family=Arima+Madurai);
+@import "node_modules/font-awesome/scss/font-awesome.scss";
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.navbar-brand {
+    font-family: 'Arima Madurai', cursive;
+}
+
+.navbar {
+    border: 0;
+
+    input {
+        background-color: darken($navbar-default-bg, 10%);
+        border: 1px solid darken($navbar-default-bg, 20%);
+        color: $text-color;
+    }
+
+    input::placeholder {
+        color: lighten($navbar-default-bg, 30%);
+    }
+}
+
+.tree-node {
+    border-bottom: 1px solid lighten($body-bg, 5%);
+}
+
+.angular-ui-tree-nodes {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.angular-ui-tree-nodes .angular-ui-tree-nodes {
+    //padding-left: 20px;
+}
+
+.angular-ui-tree-node, .angular-ui-tree-placeholder {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    min-height: 20px;
+    line-height: 20px;
+}
+
+.angular-ui-tree-hidden {
+    display: none;
+}
+
+.angular-ui-tree-placeholder {
+    margin: 5px 0;
+    padding: 0;
+    min-height: 30px;
+}
+
+.angular-ui-tree-handle {
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 20px;
+    line-height: 20px;
+}
+
+.angular-ui-tree-drag {
+    position: absolute;
+    pointer-events: none;
+    z-index: 999;
+    opacity: .8;
+}
+
+.tree-node {
+    padding: 10px;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
