@@ -45,7 +45,7 @@
                     <input type="checkbox" ng-model="user.can_upload" ng-true-value="1" ng-false-value="0" ng-change="user.$save()" />
                 </td>
                 <td class="text-center">
-                    <input type="checkbox" ng-model="user.can_modify" ng-true-value="1" ng-false-value="0" ng-change="user.$save()" />
+                    <input type="checkbox" ng-model="user.can_manage" ng-true-value="1" ng-false-value="0" ng-change="user.$save()" />
                 </td>
                 <td class="text-center">
                     <input type="checkbox" ng-model="user.can_admin" ng-true-value="1" ng-false-value="0" ng-change="user.$save()" />
