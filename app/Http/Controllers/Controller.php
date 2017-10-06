@@ -24,8 +24,26 @@ class Controller extends BaseController
     public function download($hash)
     {
         $path = base64_decode($hash);
-        $url = "https://" . env('AZURE_ACCOUNT_NAME') . ".blob.core.windows.net" . $path;
 
-        return redirect($url);
+        switch (env("FILE_DRIVER")) {
+            case 'azure':
+                $url = "https://" . env('AZURE_ACCOUNT_NAME') . ".blob.core.windows.net" . $path;
+                return redirect($url);
+                break;
+
+            case 'files':
+            default:
+                $file_path = storage_path("files");
+                $path = storage_path("files/$path");
+                $real_path = realpath($path);
+                $name = basename($real_path);
+
+                if ($real_path !== false && strpos($path, $file_path) === 0 && file_exists($real_path)) {
+                    return response()->download($real_path, $name);
+                }
+                break;
+        }
+
+        return abort(404);
     }
 }
