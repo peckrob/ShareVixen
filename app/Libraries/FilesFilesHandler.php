@@ -7,8 +7,10 @@ use Illuminate\Filesystem\Filesystem;
 
 class FilesFilesHandler extends FilesHandler {
     public function getFiles($load_path, $query) {
-        $f = new Filesystem();
-        $files = $f->allFiles(storage_path("files/"));
+        $files = Cache::remember('files', env("AZURE_CACHE_MINUTES"), function() {
+            $f = new Filesystem();
+            return $f->allFiles(storage_path("files/"));
+        });
 
         $return_files = [];
 
