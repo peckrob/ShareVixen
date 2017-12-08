@@ -9,7 +9,20 @@ class FilesFilesHandler extends FilesHandler {
     public function getFiles($load_path, $query) {
         $files = Cache::remember('files', env("AZURE_CACHE_MINUTES"), function() {
             $f = new Filesystem();
-            return $f->allFiles(storage_path("files/"));
+            $file_objects = $f->allFiles(storage_path("files/"));
+
+            $files = [];
+            if (!empty($file_objects)) {
+                foreach ($file_objects as $file_object) {
+                    $files[] = [
+                        "path" => $file_object->getRelativePathname(),
+                        "mtime" => filemtime($file_object->getPath()),
+                        "size" => $file_object->getSize()
+                    ];
+                }
+            }
+
+            return $files;
         });
 
         $return_files = [];
@@ -18,7 +31,7 @@ class FilesFilesHandler extends FilesHandler {
             foreach ($files as $file) {
                 $back_path = "";
 
-                $name = $file->getRelativePathname();
+                $name = $file["path"];
 
                 if (!empty($query)) {
                     if (!stristr($name, $query)) {
@@ -91,15 +104,17 @@ class FilesFilesHandler extends FilesHandler {
                     }
 
                     // Generate a download URL.
-                    $blob_url = $file->getRelativePathname();
+                    $blob_url = $file["path"];
                     $path = parse_url($blob_url, PHP_URL_PATH);
                     $download_url = route('download', ["hash" => base64_encode($path)]);
 
                     $data = [
                         "title" => $filename,
                         "url" => $download_url,
-                        "date" => $file->getCTime(),
-                        "size" => $file->getSize(),
+                        "date" => [
+                            "date" => date("c", $file["mtime"])
+                        ],
+                        "size" => $file["size"],
                         "indent_level" => $indent_level + 1,
                         "path" => $back_path
                     ];
